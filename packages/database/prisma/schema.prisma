@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  discordId    String   @unique
+  accessToken  String   @db.VarChar(2000)
+  refreshToken String   @db.VarChar(2000)
+  createdAt    DateTime @default(now())
+}
+
+model ModuleMessage {
+  id               Int     @id @default(autoincrement())
+  guildId          String  @unique
+  welcomeMessage   String  @db.VarChar(2000)
+  goodbyeMessage   String  @db.VarChar(2000)
+  isWelcomeEnabled Boolean @default(true)
+  isGoodbyeEnabled Boolean @default(true)
+}
