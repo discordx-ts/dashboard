@@ -1,20 +1,20 @@
 import { PrismaService } from "../../prisma/services/prisma.service";
-import { UserEntity, UserEntityProvider } from "../entities/user.entity";
+import { UserModel, UserModelProvider } from "../models/user.model";
 import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { User } from "@workspace/database";
 
 @Injectable()
 export class UserService {
   constructor(
-    @Inject(forwardRef(() => UserEntityProvider))
-    private userEntityProvider: UserEntityProvider,
+    @Inject(forwardRef(() => UserModelProvider))
+    private userEntityProvider: UserModelProvider,
     private prisma: PrismaService,
   ) {}
 
   /**
    * Get user by id
    */
-  async get(id: number): Promise<UserEntity | null> {
+  async get(id: number): Promise<UserModel | null> {
     try {
       const result = await this.prisma.user.findUniqueOrThrow({
         where: { id },
@@ -29,7 +29,7 @@ export class UserService {
   /**
    * Get user by discord id
    */
-  async getByDiscordId(id: string): Promise<UserEntity | null> {
+  async getByDiscordId(id: string): Promise<UserModel | null> {
     try {
       const result = await this.prisma.user.findUniqueOrThrow({
         where: { discordId: id },
@@ -44,7 +44,7 @@ export class UserService {
   /***
    * Create user
    */
-  async create(user: Omit<User, "id" | "createdAt">): Promise<UserEntity> {
+  async create(user: Omit<User, "id" | "createdAt">): Promise<UserModel> {
     const result = await this.prisma.user.create({ data: user });
     return this.userEntityProvider.fromPrisma(result);
   }

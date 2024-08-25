@@ -1,5 +1,5 @@
 import { ConfigService, ConfigKeys } from "../../config/config.service";
-import { UserEntity } from "../../user/entities/user.entity";
+import { UserModel } from "../../user/models/user.model";
 import { UserService } from "../../user/services/user.service";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
@@ -17,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any): Promise<UserEntity> {
+  async validate(payload: any): Promise<UserModel> {
     const { sub } = payload;
     const user = await this.userService.get(sub);
     if (!user) {

@@ -1,6 +1,6 @@
-import { UserEntity } from "../../modules/user/entities/user.entity";
+import { UserModel } from "../../modules/user/models/user.model";
 import { Request } from "express";
 
 export interface AuthRequest extends Request {
-  user: UserEntity;
+  user: UserModel;
 }

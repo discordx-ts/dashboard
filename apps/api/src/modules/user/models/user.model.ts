@@ -11,7 +11,7 @@ import { Exclude, Expose, instanceToPlain } from "class-transformer";
 import { APIGuild, Routes } from "discord-api-types/v10";
 
 @Exclude()
-export class UserEntity {
+export class UserModel {
   @Expose()
   id: number;
 
@@ -72,12 +72,12 @@ export class UserEntity {
 }
 
 @Injectable()
-export class UserEntityProvider {
+export class UserModelProvider {
   constructor(
     @Inject(forwardRef(() => UserService)) private userService: UserService,
   ) {}
 
-  fromPrisma(user: User): UserEntity {
-    return new UserEntity(this.userService, user);
+  fromPrisma(user: User): UserModel {
+    return new UserModel(this.userService, user);
   }
 }

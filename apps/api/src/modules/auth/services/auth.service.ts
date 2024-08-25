@@ -1,5 +1,5 @@
 import { ConfigKeys, ConfigService } from "../../config/config.service";
-import { UserEntity } from "../../user/entities/user.entity";
+import { UserModel } from "../../user/models/user.model";
 import { UserService } from "../../user/services/user.service";
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
@@ -17,7 +17,7 @@ export class AuthService {
     accessToken: string,
     refreshToken: string,
     profile: Profile,
-  ): Promise<UserEntity> {
+  ): Promise<UserModel> {
     let user = await this.userService.getByDiscordId(profile.id);
 
     if (!user) {
@@ -33,7 +33,7 @@ export class AuthService {
     return user;
   }
 
-  async login(user: UserEntity) {
+  async login(user: UserModel) {
     const payload = { sub: user.id, discordId: user.discordId };
     return {
       access_token: this.jwtService.sign(payload, {
