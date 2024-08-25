@@ -16,6 +16,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/lib/api";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosError } from "axios";
 import { useParams } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -66,16 +67,24 @@ export default function Page() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     await api.patch(`/module/${server}/welcome-goodbye`, values);
-    mutate();
+    await mutate();
     toast.success("Configuration saved");
   };
 
-  if (error) return <Error message="Failed to load data" />;
+  if (error)
+    return (
+      <Error
+        message={
+          (error as AxiosError<{ message?: string }>).response?.data.message ??
+          "Failed to load data"
+        }
+      />
+    );
   if (!data) return <Loader />;
 
   return (
     <>
-      <div className="bg-background max-w-lg rounded-md p-4">
+      <div className="bg-background max-w-lg rounded-md p-4 shadow">
         <h1 className="mb-6 text-2xl font-bold">Welcome & Goodbye</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

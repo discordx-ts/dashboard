@@ -8,7 +8,7 @@ import {
 } from "@nestjs/common";
 import { User } from "@workspace/database";
 import { Exclude, Expose, instanceToPlain } from "class-transformer";
-import { APIGuild, Routes } from "discord-api-types/v10";
+import { APIGuild, APIUser, Routes } from "discord-api-types/v10";
 
 @Exclude()
 export class UserModel {
@@ -28,7 +28,7 @@ export class UserModel {
   createdAt: Date;
 
   @Exclude()
-  rest: REST;
+  private rest: REST;
 
   constructor(
     private userService: UserService,
@@ -36,14 +36,25 @@ export class UserModel {
   ) {
     Object.assign(this, user);
     this.rest = new REST({ version: "10", authPrefix: "Bearer" }).setToken(
-      user.accessToken,
+      this.user.accessToken,
     );
+  }
+
+  async getMe() {
+    return this.rest.get(Routes.user()) as Promise<APIUser>;
+  }
+
+  async getGuilds() {
+    const guilds = (await this.rest.get(Routes.userGuilds())) as APIGuild[];
+    return guilds.filter((guild) => guild.owner);
   }
 
   async getGuild(id: string) {
     try {
-      const guilds = (await this.rest.get(Routes.userGuilds())) as APIGuild[];
-      const guild = guilds.find((guild) => guild.id === id && guild.owner);
+      const restGuilds = await this.rest.get(Routes.userGuilds());
+      const guilds = restGuilds as APIGuild[];
+
+      const guild = guilds.find((guild) => guild.id === id);
       if (!guild) {
         throw Error();
       }

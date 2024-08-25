@@ -1,9 +1,11 @@
 import { AuthRequest } from "../../../shared/interfaces/express";
+import { BotService } from "../../discord/services/bot.service";
 import { PrismaService } from "../../prisma/services/prisma.service";
 import { WelcomeGoodbyeDto } from "../dto/welcome-goodbye.dto";
 import {
   Body,
   Controller,
+  ForbiddenException,
   Get,
   Param,
   Patch,
@@ -15,15 +17,35 @@ import { AuthGuard } from "@nestjs/passport";
 @Controller("module/:server/welcome-goodbye")
 @UseGuards(AuthGuard("jwt"))
 export class WelcomeGoodbyeModuleController {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private bot: BotService,
+  ) {}
 
   @Get()
-  async get(@Param("server") server: string, @Req() req: AuthRequest) {
-    const guild = await req.user.getGuild(server);
+  async get(@Param("server") server: string, @Req() { user }: AuthRequest) {
+    /**
+     * Get the guild
+     */
+    const guild = await this.bot.getGuild(server);
+
+    /**
+     * Make sure user has access to guild
+     */
+    if (!guild.isOwner(user.discordId)) {
+      throw new ForbiddenException();
+    }
+
+    /**
+     * Get payload for guild
+     */
     let data = await this.prisma.moduleMessage.findFirst({
       where: { guildId: guild.id },
     });
 
+    /**
+     * Create payload if not exist in database
+     */
     if (!data) {
       data = await this.prisma.moduleMessage.create({
         data: {
@@ -34,6 +56,9 @@ export class WelcomeGoodbyeModuleController {
       });
     }
 
+    /**
+     * Return the payload
+     */
     return data;
   }
 
@@ -41,9 +66,23 @@ export class WelcomeGoodbyeModuleController {
   async update(
     @Param("server") server: string,
     @Body() payload: WelcomeGoodbyeDto,
-    @Req() req: AuthRequest,
+    @Req() { user }: AuthRequest,
   ) {
-    const guild = await req.user.getGuild(server);
+    /**
+     * Get the guild
+     */
+    const guild = await this.bot.getGuild(server);
+
+    /**
+     * Make sure user has access to guild
+     */
+    if (!guild.isOwner(user.discordId)) {
+      throw new ForbiddenException();
+    }
+
+    /**
+     * Update the payload
+     */
     await this.prisma.moduleMessage.update({
       where: { guildId: guild.id },
       data: payload,

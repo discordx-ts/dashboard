@@ -2,6 +2,7 @@
 
 import { HeaderUser } from "@/components/molecules/header";
 import Sidebar from "@/components/molecules/sidebar";
+import { ThemeModeToggle } from "@/components/molecules/theme-mode";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -41,6 +42,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <h1>Dashboard</h1>
           <span className="flex-1" />
           <HeaderUser />
+          <ThemeModeToggle />
         </header>
         <main className="px-4 sm:px-6">{children}</main>
       </div>
