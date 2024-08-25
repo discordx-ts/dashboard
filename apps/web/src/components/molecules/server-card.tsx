@@ -6,19 +6,25 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function ServerCard({ name, id, icon }: APIGuild) {
-  const avatar = `https://cdn.discordapp.com/icons/${id}/${icon}.jpg`;
+  const avatar = icon
+    ? `https://cdn.discordapp.com/icons/${id}/${icon}.jpg`
+    : null;
 
   return (
     <div className="bg-muted space-y-4 overflow-hidden rounded-md">
-      <div className="relative flex h-40 items-center justify-center overflow-hidden">
-        <Image
-          alt="background"
-          src={avatar}
-          fill
-          className="absolute blur-xl"
-        />
+      <div className="relative flex h-40 items-center justify-center overflow-hidden border-b">
+        {avatar ? (
+          <Image
+            alt="background"
+            src={avatar}
+            fill
+            className="absolute blur-xl"
+          />
+        ) : (
+          <div className="absolute h-full w-full" />
+        )}
         <Avatar className="size-20 border">
-          <AvatarImage src={avatar} />
+          {avatar && <AvatarImage src={avatar} />}
           <AvatarFallback>{getInitials(name)}</AvatarFallback>
         </Avatar>
       </div>

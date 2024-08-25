@@ -42,10 +42,12 @@ export default function ServerSelect({ selected }: Props) {
             {servers.map(({ id, name, icon }) => (
               <SelectItem key={`server-${id}`} value={`${id}`}>
                 <div className="flex items-center gap-2">
-                  <Avatar className="size-5">
-                    <AvatarImage
-                      src={`https://cdn.discordapp.com/icons/${id}/${icon}.jpg`}
-                    />
+                  <Avatar className="size-5 text-xs">
+                    {icon && (
+                      <AvatarImage
+                        src={`https://cdn.discordapp.com/icons/${id}/${icon}.jpg`}
+                      />
+                    )}
                     <AvatarFallback>{getInitials(name)}</AvatarFallback>
                   </Avatar>
                   <span>{name}</span>
