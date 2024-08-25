@@ -12,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { ThemeModeToggle } from "./theme-mode";
 import { BASE_API_ENDPOINT } from "@/lib/api";
 import { getInitials } from "@/lib/utils";
 import { CaretDownIcon } from "@radix-ui/react-icons";
@@ -75,7 +76,7 @@ export function HeaderUser() {
 export default function Header() {
   return (
     <div className="bg-background fixed top-0 z-10 w-full border-b">
-      <div className="flex h-full items-center px-4 py-4 sm:px-6">
+      <div className="flex h-full items-center gap-2 px-4 py-4 sm:px-6">
         <Link href="/">
           <Button variant="link">Discordx</Button>
         </Link>
@@ -84,6 +85,7 @@ export default function Header() {
         </Link>
         <span className="flex-1" />
         <HeaderUser />
+        <ThemeModeToggle />
       </div>
     </div>
   );
