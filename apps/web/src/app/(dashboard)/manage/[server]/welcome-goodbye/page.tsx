@@ -31,19 +31,21 @@ const formSchema = z.object({
   isGoodbyeEnabled: z.boolean(),
 });
 
+interface WelcomeGoodbyResponse {
+  welcomeMessage: string;
+  goodbyeMessage: string;
+  isWelcomeEnabled: boolean;
+  isGoodbyeEnabled: boolean;
+}
+
 export default function Page() {
   const { server } = useParams();
-  const { data, error, mutate } = useSWR(
-    `/module/${server}/welcome-goodbye`,
-    (url) =>
-      api
-        .get<{
-          welcomeMessage: string;
-          goodbyeMessage: string;
-          isWelcomeEnabled: boolean;
-          isGoodbyeEnabled: boolean;
-        }>(url)
-        .then((res) => res.data),
+  const { data, error, mutate } = useSWR<
+    WelcomeGoodbyResponse,
+    AxiosError<{ message?: string }>,
+    string
+  >(`/module/${server}/welcome-goodbye`, (url) =>
+    api.get(url).then((res) => res.data),
   );
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -71,15 +73,12 @@ export default function Page() {
     toast.success("Configuration saved");
   };
 
-  if (error)
+  if (error) {
     return (
-      <Error
-        message={
-          (error as AxiosError<{ message?: string }>).response?.data.message ??
-          "Failed to load data"
-        }
-      />
+      <Error message={error.response?.data.message ?? "Failed to load data"} />
     );
+  }
+
   if (!data) return <Loader />;
 
   return (

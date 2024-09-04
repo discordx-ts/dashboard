@@ -7,15 +7,13 @@
     "package.json"
   ],
   "scripts": {
-    "build": "tsc",
-    "db:generate": "prisma generate && npm run build",
+    "build": "prisma generate",
     "db:push": "prisma db push --skip-generate"
   },
   "dependencies": {
     "@prisma/client": "^5.18.0"
   },
   "devDependencies": {
-    "prisma": "^5.18.0",
-    "typescript": "^5.5.4"
+    "prisma": "^5.18.0"
   }
 }
