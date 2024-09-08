@@ -3,6 +3,12 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
+# Install OpenSSL
+RUN apt-get update && \
+    apt-get install -y \
+    openssl \
+    && rm -rf /var/lib/apt/lists/*
+
 FROM base AS build
 COPY . /usr/src/app
 WORKDIR /usr/src/app
@@ -15,6 +21,8 @@ RUN pnpm deploy --filter=web --prod /prod/web
 FROM base AS api
 COPY --from=build /prod/api /app
 WORKDIR /app
+RUN chmod +x /app/entrypoint.sh
+ENTRYPOINT ["/app/entrypoint.sh"]
 EXPOSE 4000
 CMD [ "npm", "run", "start:prod" ]
 

@@ -4,11 +4,13 @@
   "main": "dist/index.js",
   "files": [
     "dist",
+    "prisma",
     "package.json"
   ],
   "scripts": {
     "build": "prisma generate",
-    "db:push": "prisma db push --skip-generate"
+    "db:push": "prisma db push --skip-generate",
+    "db:migrate": "prisma migrate deploy"
   },
   "dependencies": {
     "@prisma/client": "^5.18.0"
