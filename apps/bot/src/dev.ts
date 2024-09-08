@@ -1,8 +1,9 @@
-import { bot } from "./bot.js";
 import { dirname, resolve } from "@discordx/importer";
 import chokidar from "chokidar";
 import { DIService, MetadataStorage } from "discordx";
 import "dotenv/config";
+
+import { bot } from "./bot.js";
 
 // The following syntax should be used in the commonjs environment
 // const importPattern =  __dirname + "/{events,commands}/**/*.{ts,js}"

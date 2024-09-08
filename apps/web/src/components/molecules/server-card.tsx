@@ -1,9 +1,10 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { getInitials } from "@/lib/utils";
 import { APIGuild } from "discord-api-types/v10";
 import Image from "next/image";
 import Link from "next/link";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { getInitials } from "@/lib/utils";
 
 export default function ServerCard({ name, id, icon }: APIGuild) {
   const avatar = icon

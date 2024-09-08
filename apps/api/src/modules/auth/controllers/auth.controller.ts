@@ -1,9 +1,10 @@
-import { AuthRequest } from "../../../shared/interfaces/express";
-import { ConfigKeys, ConfigService } from "../../config/config.service";
-import { AuthService } from "../services/auth.service";
 import { Controller, Get, Req, Res, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { Response } from "express";
+
+import { AuthRequest } from "../../../shared/interfaces/express";
+import { ConfigKeys, ConfigService } from "../../config/config.service";
+import { AuthService } from "../services/auth.service";
 
 @Controller("auth")
 export class AuthController {
@@ -20,8 +21,8 @@ export class AuthController {
 
   @Get("discord/callback")
   @UseGuards(AuthGuard("discord"))
-  async discordLoginCallback(@Req() req: AuthRequest, @Res() res: Response) {
-    const jwt = await this.authService.login(req.user);
+  discordLoginCallback(@Req() req: AuthRequest, @Res() res: Response) {
+    const jwt = this.authService.login(req.user);
     res.redirect(
       `${this.configService.get(ConfigKeys.DISCORD_LOGIN_REDIRECT)}?token=${jwt.access_token}`,
     );

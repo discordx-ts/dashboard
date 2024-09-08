@@ -1,5 +1,14 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosError } from "axios";
+import { useParams } from "next/navigation";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import useSWR from "swr";
+import { z } from "zod";
+
 import Error from "@/components/molecules/error";
 import Loader from "@/components/molecules/loader";
 import { Button } from "@/components/ui/button";
@@ -15,14 +24,6 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/lib/api";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { AxiosError } from "axios";
-import { useParams } from "next/navigation";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import useSWR from "swr";
-import { z } from "zod";
 
 const formSchema = z.object({
   welcomeMessage: z.string().min(1).max(200),
@@ -39,7 +40,9 @@ interface WelcomeGoodbyResponse {
 }
 
 export default function Page() {
-  const { server } = useParams();
+  const { _server } = useParams();
+  const server = _server as string;
+
   const { data, error, mutate } = useSWR<
     WelcomeGoodbyResponse,
     AxiosError<{ message?: string }>,

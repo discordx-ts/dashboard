@@ -1,5 +1,11 @@
 "use client";
 
+import { CaretDownIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
+
+import { BASE_API_ENDPOINT } from "@/lib/api";
+import { getInitials } from "@/lib/utils";
+
 import { useAuth } from "../contexts/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
@@ -12,10 +18,6 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { ThemeModeToggle } from "./theme-mode";
-import { BASE_API_ENDPOINT } from "@/lib/api";
-import { getInitials } from "@/lib/utils";
-import { CaretDownIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
 
 export function HeaderUser() {
   const { user, logout } = useAuth();

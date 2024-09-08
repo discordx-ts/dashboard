@@ -1,7 +1,3 @@
-import { AuthRequest } from "../../../shared/interfaces/express";
-import { BotService } from "../../discord/services/bot.service";
-import { PrismaService } from "../../prisma/services/prisma.service";
-import { WelcomeGoodbyeDto } from "../dto/welcome-goodbye.dto";
 import {
   Body,
   Controller,
@@ -13,6 +9,11 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
+
+import { AuthRequest } from "../../../shared/interfaces/express";
+import { BotService } from "../../discord/services/bot.service";
+import { PrismaService } from "../../prisma/services/prisma.service";
+import { WelcomeGoodbyeDto } from "../dto/welcome-goodbye.dto";
 
 @Controller("module/:server/welcome-goodbye")
 @UseGuards(AuthGuard("jwt"))

@@ -1,16 +1,17 @@
 "use client";
 
-import { api, handleApiError } from "@/lib/api";
 import { AxiosError } from "axios";
 import { APIUser } from "discord-api-types/v10";
 import { useRouter } from "next/navigation";
 import {
+  ReactNode,
   createContext,
   useContext,
-  useState,
   useEffect,
-  ReactNode,
+  useState,
 } from "react";
+
+import { api, handleApiError } from "@/lib/api";
 
 export interface AuthContextType {
   user?: APIUser | null;

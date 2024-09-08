@@ -1,11 +1,12 @@
 "use client";
 
+import { APIGuild } from "discord-api-types/v10";
+import useSWR from "swr";
+
 import Header from "@/components/molecules/header";
 import Loader from "@/components/molecules/loader";
 import ServerCard from "@/components/molecules/server-card";
 import { api } from "@/lib/api";
-import { APIGuild } from "discord-api-types/v10";
-import useSWR from "swr";
 
 function View() {
   const { data } = useSWR("/discord/guilds", (url) =>

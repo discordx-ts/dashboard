@@ -1,5 +1,6 @@
-import { BotService } from "../services/bot.service";
 import { APIGuild } from "discord-api-types/v10";
+
+import { BotService } from "../services/bot.service";
 
 export class GuildModel {
   id: string;
@@ -31,7 +32,7 @@ export class GuildModel {
     return this.bot.getMember(this.id, memberId);
   }
 
-  getMembers(limit: number = 1, after: number = 0) {
+  getMembers(limit = 1, after = 0) {
     return this.bot.getMembers(this.id, limit, after);
   }
 }

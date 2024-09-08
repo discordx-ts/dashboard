@@ -1,6 +1,3 @@
-import { AuthRequest } from "../../../shared/interfaces/express";
-import { MembersQueryDto } from "../dto/members-query.dto";
-import { BotService } from "../services/bot.service";
 import {
   Controller,
   ForbiddenException,
@@ -11,6 +8,10 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
+
+import { AuthRequest } from "../../../shared/interfaces/express";
+import { MembersQueryDto } from "../dto/members-query.dto";
+import { BotService } from "../services/bot.service";
 
 @Controller("discord")
 export class DiscordController {

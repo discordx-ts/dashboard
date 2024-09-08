@@ -1,7 +1,11 @@
 {
+  "endOfLine": "auto",
+  "importOrder": ["^@/(.*)$", "^[./]"],
+  "importOrderParserPlugins": ["jsx", "typescript", "decorators-legacy"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
   "plugins": [
     "@trivago/prettier-plugin-sort-imports",
     "prettier-plugin-tailwindcss"
-  ],
-  "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"]
+  ]
 }

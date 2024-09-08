@@ -1,9 +1,10 @@
-import { ConfigKeys, ConfigService } from "../../config/config.service";
-import { UserModel } from "../../user/models/user.model";
-import { UserService } from "../../user/services/user.service";
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { Profile } from "passport-discord";
+
+import { ConfigKeys, ConfigService } from "../../config/config.service";
+import { UserModel } from "../../user/models/user.model";
+import { UserService } from "../../user/services/user.service";
 
 @Injectable()
 export class AuthService {
@@ -33,7 +34,7 @@ export class AuthService {
     return user;
   }
 
-  async login(user: UserModel) {
+  login(user: UserModel) {
     const payload = { sub: user.id, discordId: user.discordId };
     return {
       access_token: this.jwtService.sign(payload, {

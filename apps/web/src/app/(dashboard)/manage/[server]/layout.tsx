@@ -1,5 +1,8 @@
 "use client";
 
+import { PanelLeft } from "lucide-react";
+import React from "react";
+
 import { HeaderUser } from "@/components/molecules/header";
 import Sidebar from "@/components/molecules/sidebar";
 import { ThemeModeToggle } from "@/components/molecules/theme-mode";
@@ -10,8 +13,6 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { PanelLeft } from "lucide-react";
-import React from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = React.useState(false);

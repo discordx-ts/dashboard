@@ -1,6 +1,7 @@
-import prisma from "../utils/prisma.js";
 import type { ArgsOf } from "discordx";
 import { Discord, On } from "discordx";
+
+import prisma from "../utils/prisma.js";
 
 @Discord()
 export class Example {

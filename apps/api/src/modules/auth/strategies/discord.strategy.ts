@@ -1,8 +1,10 @@
-import { ConfigKeys, ConfigService } from "../../config/config.service";
-import { AuthService } from "../services/auth.service";
 import { Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
-import { Strategy, Profile } from "passport-discord";
+import { Profile, Strategy } from "passport-discord";
+
+import { ConfigKeys, ConfigService } from "../../config/config.service";
+import { UserModel } from "../../user/models/user.model";
+import { AuthService } from "../services/auth.service";
 
 @Injectable()
 export class DiscordStrategy extends PassportStrategy(Strategy, "discord") {
@@ -27,7 +29,7 @@ export class DiscordStrategy extends PassportStrategy(Strategy, "discord") {
     accessToken: string,
     refreshToken: string,
     profile: Profile,
-  ): Promise<any> {
+  ): Promise<UserModel> {
     const user = await this.authService.validateDiscordUser(
       accessToken,
       refreshToken,

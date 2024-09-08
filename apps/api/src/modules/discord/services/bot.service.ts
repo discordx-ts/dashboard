@@ -1,5 +1,3 @@
-import { ConfigKeys, ConfigService } from "../../config/config.service";
-import { GuildModel } from "../models/guild.model";
 import { REST } from "@discordjs/rest";
 import { BadRequestException, Injectable } from "@nestjs/common";
 import {
@@ -10,6 +8,9 @@ import {
   GuildChannelType,
   Routes,
 } from "discord-api-types/v10";
+
+import { ConfigKeys, ConfigService } from "../../config/config.service";
+import { GuildModel } from "../models/guild.model";
 
 @Injectable()
 export class BotService {
@@ -30,6 +31,7 @@ export class BotService {
     try {
       const data = (await this.rest.get(Routes.guild(guildId))) as APIGuild;
       return new GuildModel(data, this);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       throw new BadRequestException(
         "Please ensure that you invite the bot to your guild before proceeding.",
@@ -77,7 +79,7 @@ export class BotService {
     return channels;
   }
 
-  async getMembers(guildId: string, limit: number = 1, after: number = 0) {
+  async getMembers(guildId: string, limit = 1, after = 0) {
     const query = new URLSearchParams();
     query.set("limit", limit.toString());
     query.set("after", after.toString());

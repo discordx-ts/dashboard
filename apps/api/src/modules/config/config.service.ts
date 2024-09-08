@@ -1,12 +1,13 @@
-import { ConfigKeys } from "./config-keys.enum";
 import { Injectable } from "@nestjs/common";
 import "dotenv/config";
+
+import { ConfigKeys } from "./config-keys.enum";
 
 export { ConfigKeys };
 
 @Injectable()
 export class ConfigService {
-  private readonly envConfig: { [key: string]: string | undefined };
+  private readonly envConfig: Record<string, string | undefined>;
 
   constructor() {
     this.envConfig = process.env;

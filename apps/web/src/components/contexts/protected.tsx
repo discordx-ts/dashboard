@@ -1,5 +1,10 @@
 "use client";
 
+import { APIUser } from "discord-api-types/v10";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { ReactNode, createContext, useContext } from "react";
+
 import Loader from "../molecules/loader";
 
 /*
@@ -9,10 +14,6 @@ import Loader from "../molecules/loader";
  * ----------------------------------------------------------------------------------------------------
  */
 import { AuthContextType, useAuth } from "./auth";
-import { APIUser } from "discord-api-types/v10";
-import { useRouter } from "next/navigation";
-import React from "react";
-import { createContext, useContext, ReactNode } from "react";
 
 export interface ProtectedContext extends AuthContextType {
   user: APIUser;

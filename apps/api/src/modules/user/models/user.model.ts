@@ -1,14 +1,15 @@
-import { UserService } from "../services/user.service";
 import { REST } from "@discordjs/rest";
 import {
   BadRequestException,
-  forwardRef,
   Inject,
   Injectable,
+  forwardRef,
 } from "@nestjs/common";
 import { User } from "@workspace/database";
 import { Exclude, Expose, instanceToPlain } from "class-transformer";
 import { APIGuild, APIUser, Routes } from "discord-api-types/v10";
+
+import { UserService } from "../services/user.service";
 
 @Exclude()
 export class UserModel {

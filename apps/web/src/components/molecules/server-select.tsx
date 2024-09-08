@@ -1,4 +1,7 @@
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { APIGuild } from "discord-api-types/v10";
+import { useRouter } from "next/navigation";
+import useSWR from "swr";
+
 import {
   Select,
   SelectContent,
@@ -10,9 +13,8 @@ import {
 } from "@/components/ui/select";
 import { api } from "@/lib/api";
 import { getInitials } from "@/lib/utils";
-import { APIGuild } from "discord-api-types/v10";
-import { useRouter } from "next/navigation";
-import useSWR from "swr";
+
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 interface Props {
   selected: string;
@@ -40,7 +42,7 @@ export default function ServerSelect({ selected }: Props) {
           <SelectGroup>
             <SelectLabel>Servers</SelectLabel>
             {servers.map(({ id, name, icon }) => (
-              <SelectItem key={`server-${id}`} value={`${id}`}>
+              <SelectItem key={`server-${id}`} value={id}>
                 <div className="flex items-center gap-2">
                   <Avatar className="size-5 text-xs">
                     {icon && (

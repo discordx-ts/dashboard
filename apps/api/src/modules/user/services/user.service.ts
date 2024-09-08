@@ -1,7 +1,8 @@
+import { Inject, Injectable, forwardRef } from "@nestjs/common";
+import { User } from "@workspace/database";
+
 import { PrismaService } from "../../prisma/services/prisma.service";
 import { UserModel, UserModelProvider } from "../models/user.model";
-import { forwardRef, Inject, Injectable } from "@nestjs/common";
-import { User } from "@workspace/database";
 
 @Injectable()
 export class UserService {
@@ -21,6 +22,7 @@ export class UserService {
       });
 
       return this.userEntityProvider.fromPrisma(result);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       return null;
     }
@@ -36,6 +38,7 @@ export class UserService {
       });
 
       return this.userEntityProvider.fromPrisma(result);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       return null;
     }

@@ -1,9 +1,10 @@
 "use client";
 
-import { useAuth } from "@/components/contexts/auth";
-import Loader from "@/components/molecules/loader";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
+
+import { useAuth } from "@/components/contexts/auth";
+import Loader from "@/components/molecules/loader";
 
 export default function Page() {
   const params = useSearchParams();

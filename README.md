@@ -39,7 +39,6 @@
 
 ![image](https://github.com/user-attachments/assets/f954e371-ba82-4707-8877-121fe2edb129)
 
-
 # 📖 Introduction
 
 This template is designed to help you quickly set up a bot using DiscordX, along with a dashboard and API. It provides a user interface for bot server owners to gain insights. The aim of this project is to offer new developers a ready-to-use solution, saving them from spending time on learning and preparing the basic core structure. This open-source project welcomes contributions to help it evolve and become a valuable starting point for both new and experienced developers. Join me on this journey and feel free to contribute as you see fit. Thank you!
