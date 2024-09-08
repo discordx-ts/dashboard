@@ -4,6 +4,8 @@ import { BotService } from "../services/bot.service";
 
 export class GuildModel {
   id: string;
+  owner_id: string;
+  system_channel_id: string | null;
 
   constructor(
     private data: APIGuild,
@@ -34,5 +36,9 @@ export class GuildModel {
 
   getMembers(limit = 1, after = 0) {
     return this.bot.getMembers(this.id, limit, after);
+  }
+
+  toJSON() {
+    return this.data;
   }
 }

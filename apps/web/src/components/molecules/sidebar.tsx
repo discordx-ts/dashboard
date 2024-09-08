@@ -5,12 +5,13 @@ import {
   SettingsIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { useParams, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+import { useGuild } from "../contexts/guild";
 import ServerSelect from "./server-select";
 
 interface Item {
@@ -26,8 +27,7 @@ interface Props {
 }
 
 export default function Sidebar({ onClick }: Props) {
-  const { _server } = useParams();
-  const server = _server as string;
+  const { guild } = useGuild();
 
   const pathname = usePathname();
 
@@ -35,26 +35,26 @@ export default function Sidebar({ onClick }: Props) {
     {
       title: "Dashboard",
       Icon: LayoutDashboard,
-      href: `/manage/${server}`,
+      href: `/manage/${guild.id}`,
     },
     "Essentials",
     {
       title: "Welcome & Goodbye",
       Icon: PartyPopper,
-      href: `/manage/${server}/welcome-goodbye`,
+      href: `/manage/${guild.id}/welcome`,
     },
     "Server Management",
     {
       title: "Moderation",
       Icon: SettingsIcon,
-      href: `/manage/${server}/moderation`,
+      href: `/manage/${guild.id}/moderation`,
     },
   ];
 
   return (
     <nav className="flex flex-col gap-4 px-2 sm:py-4">
       <div>
-        <ServerSelect selected={server} />
+        <ServerSelect selected={guild.id} />
       </div>
       {items.map((item, index) =>
         typeof item === "string" ? (

@@ -1,9 +1,11 @@
-import { ModuleMessage } from "@workspace/database";
+import { Welcome } from "@workspace/database";
 import { IsBoolean, IsNotEmpty, IsString, MaxLength } from "class-validator";
 
-export class WelcomeGoodbyeDto
-  implements Omit<ModuleMessage, "id" | "guildId">
-{
+export class WelcomeDto implements Omit<Welcome, "id" | "guildId"> {
+  @IsString()
+  @IsNotEmpty()
+  channelId: string;
+
   @IsString()
   @IsNotEmpty()
   @MaxLength(2000)

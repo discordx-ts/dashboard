@@ -22,7 +22,7 @@ interface Props {
 
 export default function ServerSelect({ selected }: Props) {
   const router = useRouter();
-  const { data } = useSWR("/discord/guilds", (url) =>
+  const { data } = useSWR("/@me/guilds", (url) =>
     api.get<APIGuild[]>(url).then((res) => res.data),
   );
 

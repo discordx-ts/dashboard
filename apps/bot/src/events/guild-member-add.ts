@@ -7,17 +7,31 @@ import prisma from "../utils/prisma.js";
 export class Example {
   @On()
   async guildMemberAdd([member]: ArgsOf<"guildMemberAdd">) {
-    const { systemChannel } = member.guild;
-    const data = await prisma.moduleMessage.findFirst({
+    /**
+     * Get guild welcome data
+     */
+    const data = await prisma.welcome.findFirst({
       where: { guildId: member.guild.id },
     });
 
-    if (!data || !systemChannel) {
+    if (!data) {
       return;
     }
 
+    /**
+     * Get welcome channel
+     */
+
+    const channel = member.guild.channels.cache.get(data.channelId);
+    if (!channel?.isTextBased()) {
+      return;
+    }
+
+    /**
+     * Send welcome message if enabled
+     */
     if (data.isWelcomeEnabled) {
-      await systemChannel.send(
+      await channel.send(
         data.welcomeMessage
           .replaceAll("{user}", member.toString())
           .replaceAll("{server}", member.guild.toString()),
@@ -27,17 +41,31 @@ export class Example {
 
   @On()
   async guildMemberRemove([member]: ArgsOf<"guildMemberRemove">) {
-    const { systemChannel } = member.guild;
-    const data = await prisma.moduleMessage.findFirst({
+    /**
+     * Get guild welcome data
+     */
+    const data = await prisma.welcome.findFirst({
       where: { guildId: member.guild.id },
     });
 
-    if (!data || !systemChannel) {
+    if (!data) {
       return;
     }
 
+    /**
+     * Get welcome channel
+     */
+
+    const channel = member.guild.channels.cache.get(data.channelId);
+    if (!channel?.isTextBased()) {
+      return;
+    }
+
+    /**
+     * Send goodbye message if enabled
+     */
     if (data.isGoodbyeEnabled) {
-      await systemChannel.send(
+      await channel.send(
         data.goodbyeMessage
           .replaceAll("{user}", member.toString())
           .replaceAll("{server}", member.guild.toString()),

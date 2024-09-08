@@ -3,15 +3,21 @@
 import { APIGuild } from "discord-api-types/v10";
 import useSWR from "swr";
 
+import Error from "@/components/molecules/error";
 import Header from "@/components/molecules/header";
 import Loader from "@/components/molecules/loader";
 import ServerCard from "@/components/molecules/server-card";
 import { api } from "@/lib/api";
+import errorToString from "@/lib/error";
 
 function View() {
-  const { data } = useSWR("/discord/guilds", (url) =>
+  const { data, error } = useSWR("/@me/guilds", (url) =>
     api.get<APIGuild[]>(url).then((res) => res.data),
   );
+
+  if (error) {
+    return <Error message={errorToString(error)} />;
+  }
 
   if (!data) {
     return <Loader />;
@@ -20,7 +26,7 @@ function View() {
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {data.map((server, index) => (
-        <ServerCard key={`server-${index}`} {...server} />
+        <ServerCard key={`server-${index.toString()}`} {...server} />
       ))}
     </div>
   );

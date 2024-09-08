@@ -6,7 +6,7 @@ import React from "react";
 import { useAuth } from "@/components/contexts/auth";
 import Loader from "@/components/molecules/loader";
 
-export default function Page() {
+function View() {
   const params = useSearchParams();
   const router = useRouter();
 
@@ -23,4 +23,12 @@ export default function Page() {
   }, []);
 
   return <Loader />;
+}
+
+export default function Page() {
+  return (
+    <React.Suspense>
+      <View />
+    </React.Suspense>
+  );
 }

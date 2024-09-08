@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   ForbiddenException,
@@ -13,11 +14,11 @@ import { AuthGuard } from "@nestjs/passport";
 import { AuthRequest } from "../../../shared/interfaces/express";
 import { BotService } from "../../discord/services/bot.service";
 import { PrismaService } from "../../prisma/services/prisma.service";
-import { WelcomeGoodbyeDto } from "../dto/welcome-goodbye.dto";
+import { WelcomeDto } from "../dto/welcome.dto";
 
-@Controller("module/:server/welcome-goodbye")
+@Controller("welcome/:server")
 @UseGuards(AuthGuard("jwt"))
-export class WelcomeGoodbyeModuleController {
+export class WelcomeController {
   constructor(
     private prisma: PrismaService,
     private bot: BotService,
@@ -40,16 +41,27 @@ export class WelcomeGoodbyeModuleController {
     /**
      * Get payload for guild
      */
-    let data = await this.prisma.moduleMessage.findFirst({
+    let data = await this.prisma.welcome.findFirst({
       where: { guildId: guild.id },
     });
+
+    /**
+     * Make sure system channel exists
+     */
+
+    if (!guild.system_channel_id) {
+      throw new BadRequestException(
+        "The system channel is not configured. Please navigate to the Discord server settings and set it up",
+      );
+    }
 
     /**
      * Create payload if not exist in database
      */
     if (!data) {
-      data = await this.prisma.moduleMessage.create({
+      data = await this.prisma.welcome.create({
         data: {
+          channelId: guild.system_channel_id,
           guildId: guild.id,
           goodbyeMessage: "{user} has left the server",
           welcomeMessage: "{user} has joined the server",
@@ -66,7 +78,7 @@ export class WelcomeGoodbyeModuleController {
   @Patch()
   async update(
     @Param("server") server: string,
-    @Body() payload: WelcomeGoodbyeDto,
+    @Body() payload: WelcomeDto,
     @Req() { user }: AuthRequest,
   ) {
     /**
@@ -84,7 +96,7 @@ export class WelcomeGoodbyeModuleController {
     /**
      * Update the payload
      */
-    await this.prisma.moduleMessage.update({
+    await this.prisma.welcome.update({
       where: { guildId: guild.id },
       data: payload,
     });

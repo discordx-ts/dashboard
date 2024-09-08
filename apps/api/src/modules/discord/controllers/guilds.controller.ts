@@ -13,38 +13,33 @@ import { AuthRequest } from "../../../shared/interfaces/express";
 import { MembersQueryDto } from "../dto/members-query.dto";
 import { BotService } from "../services/bot.service";
 
-@Controller("discord")
-export class DiscordController {
+@Controller("guilds")
+export class DiscordGuildsController {
   constructor(private bot: BotService) {}
 
-  @Get("@me")
-  @UseGuards(AuthGuard("jwt"))
-  me(@Req() { user }: AuthRequest) {
-    /**
-     * Get and return user @me
-     */
-    return user.getMe();
-  }
-
-  @Get("guilds")
-  @UseGuards(AuthGuard("jwt"))
-  async guilds(@Req() { user }: AuthRequest) {
-    /**
-     * Get and return user guilds
-     */
-    return user.getGuilds();
-  }
-
-  @Get("/guilds/:server")
+  @Get(":server")
   @UseGuards(AuthGuard("jwt"))
   async guild(@Param("server") server: string, @Req() { user }: AuthRequest) {
     /**
-     * Get and return user guild
+     * Get the guild
      */
-    return user.getGuild(server);
+    const guild = await this.bot.getGuild(server);
+
+    /**
+     * Make sure user has access to guild
+     */
+    if (!guild.isOwner(user.discordId)) {
+      throw new ForbiddenException();
+    }
+
+    /**
+     * Return guild
+     */
+
+    return guild;
   }
 
-  @Get("/guilds/:server/channels")
+  @Get(":server/channels")
   @UseGuards(AuthGuard("jwt"))
   async channels(
     @Param("server") server: string,
@@ -68,7 +63,7 @@ export class DiscordController {
     return guild.getChannels();
   }
 
-  @Get("/guilds/:server/roles")
+  @Get(":server/roles")
   @UseGuards(AuthGuard("jwt"))
   async roles(@Param("server") server: string, @Req() { user }: AuthRequest) {
     /**
@@ -89,7 +84,7 @@ export class DiscordController {
     return guild.getRoles();
   }
 
-  @Get("/guilds/:server/members")
+  @Get(":server/members")
   @UseGuards(AuthGuard("jwt"))
   async members(
     @Param("server") server: string,

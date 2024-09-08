@@ -20,11 +20,11 @@ export interface AuthContextType {
   checkAuthStatus: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
 interface AuthProviderProps {
   children: ReactNode;
 }
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const router = useRouter();
@@ -48,9 +48,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         return;
       }
 
-      const data = await api
-        .get<APIUser>("/discord/@me")
-        .then((res) => res.data);
+      const data = await api.get<APIUser>("/@me").then((res) => res.data);
       setUser(data);
     } catch (err) {
       setUser(null);

@@ -2,12 +2,12 @@ import { Module } from "@nestjs/common";
 
 import { DiscordModule } from "../discord/discord.module";
 import { PrismaModule } from "../prisma/prisma.module";
-import { WelcomeGoodbyeModuleController } from "./controllers/welcome-goodbye.controller";
+import { WelcomeController } from "./controllers/welcome.controller";
 
 @Module({
   imports: [DiscordModule, PrismaModule],
   providers: [],
-  controllers: [WelcomeGoodbyeModuleController],
+  controllers: [WelcomeController],
   exports: [],
 })
-export class ModuleModule {}
+export class WelcomeModule {}
