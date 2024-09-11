@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@discordx/importer": "^1.3.1",
-    "@workspace/database": "workspace:^",
+    "@workspace/repo": "workspace:^",
     "discord.js": "^14.16.1",
     "discordx": "^11.12.1",
     "dotenv": "^16.4.5"

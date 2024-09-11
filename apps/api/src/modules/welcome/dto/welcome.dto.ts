@@ -1,7 +1,6 @@
-import { Welcome } from "@workspace/database";
 import { IsBoolean, IsNotEmpty, IsString, MaxLength } from "class-validator";
 
-export class WelcomeDto implements Omit<Welcome, "id" | "guildId"> {
+export class WelcomeDto {
   @IsString()
   @IsNotEmpty()
   channelId: string;

@@ -1,8 +1,8 @@
 import { APIGuild } from "discord-api-types/v10";
 
-import { BotService } from "../services/bot.service";
+import { BotService } from "../services/bot.service.js";
 
-export class GuildModel {
+export class Guild {
   id: string;
   owner_id: string;
   system_channel_id: string | null;

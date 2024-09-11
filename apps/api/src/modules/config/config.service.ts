@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import "dotenv/config";
 
-import { ConfigKeys } from "./config-keys.enum";
+import { ConfigKeys } from "./config-keys.enum.js";
 
 export { ConfigKeys };
 

@@ -1,9 +1,9 @@
 model Welcome {
-    id               Int     @id @default(autoincrement())
+    id               String  @id @default(uuid())
     guildId          String  @unique
     channelId        String
-    welcomeMessage   String  @db.VarChar(2000)
-    goodbyeMessage   String  @db.VarChar(2000)
-    isWelcomeEnabled Boolean @default(true)
-    isGoodbyeEnabled Boolean @default(true)
+    welcomeMessage   String
+    goodbyeMessage   String
+    isWelcomeEnabled Boolean
+    isGoodbyeEnabled Boolean
 }

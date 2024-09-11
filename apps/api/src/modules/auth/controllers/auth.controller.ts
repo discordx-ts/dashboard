@@ -1,10 +1,46 @@
-import { Controller, Get, Req, Res, UseGuards } from "@nestjs/common";
+import {
+  ArgumentsHost,
+  Catch,
+  Controller,
+  ExceptionFilter,
+  Get,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  Req,
+  Res,
+  UseFilters,
+  UseGuards,
+} from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { Response } from "express";
 
-import { AuthRequest } from "../../../shared/interfaces/express";
-import { ConfigKeys, ConfigService } from "../../config/config.service";
-import { AuthService } from "../services/auth.service";
+import { AuthRequest } from "../../../shared/interfaces/express.js";
+import { ConfigKeys, ConfigService } from "../../config/config.service.js";
+import { AuthService } from "../services/auth.service.js";
+
+@Catch()
+@Injectable()
+export class CallbackExceptionFilter implements ExceptionFilter {
+  constructor(private configService: ConfigService) {
+    //
+  }
+
+  catch(exception, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse<Response>();
+
+    let status = HttpStatus.BAD_REQUEST;
+    if (exception instanceof HttpException) {
+      status = exception.getStatus();
+    }
+
+    const redirectURL = this.configService.get(
+      ConfigKeys.DISCORD_LOGIN_FAILURE_REDIRECT,
+    );
+    response.status(status).redirect(redirectURL);
+  }
+}
 
 @Controller("auth")
 export class AuthController {
@@ -20,11 +56,12 @@ export class AuthController {
   }
 
   @Get("discord/callback")
+  @UseFilters(CallbackExceptionFilter)
   @UseGuards(AuthGuard("discord"))
   discordLoginCallback(@Req() req: AuthRequest, @Res() res: Response) {
     const jwt = this.authService.login(req.user);
     res.redirect(
-      `${this.configService.get(ConfigKeys.DISCORD_LOGIN_REDIRECT)}?token=${jwt.access_token}`,
+      `${this.configService.get(ConfigKeys.DISCORD_LOGIN_SUCCESS_REDIRECT)}?token=${jwt.access_token}`,
     );
   }
 }

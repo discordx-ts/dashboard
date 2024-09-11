@@ -1,7 +1,7 @@
 model User {
-    id           Int      @id @default(autoincrement())
+    id           String   @id @default(uuid())
     discordId    String   @unique
-    accessToken  String   @db.VarChar(2000)
-    refreshToken String   @db.VarChar(2000)
+    accessToken  String
+    refreshToken String
     createdAt    DateTime @default(now())
 }

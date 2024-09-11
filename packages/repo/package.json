@@ -1,0 +1,25 @@
+{
+  "name": "@workspace/repo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "npx eslint .",
+    "start": "node build/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "@discordjs/rest": "^2.4.0",
+    "@workspace/database": "workspace:^",
+    "discord-api-types": "^0.37.100",
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.8.0"
+  }
+}

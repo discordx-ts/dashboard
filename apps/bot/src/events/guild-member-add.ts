@@ -1,7 +1,6 @@
+import { welcomes } from "@workspace/repo";
 import type { ArgsOf } from "discordx";
 import { Discord, On } from "discordx";
-
-import prisma from "../utils/prisma.js";
 
 @Discord()
 export class Example {
@@ -10,9 +9,7 @@ export class Example {
     /**
      * Get guild welcome data
      */
-    const data = await prisma.welcome.findFirst({
-      where: { guildId: member.guild.id },
-    });
+    const data = await welcomes.getByGuildId(member.guild.id);
 
     if (!data) {
       return;
@@ -44,9 +41,7 @@ export class Example {
     /**
      * Get guild welcome data
      */
-    const data = await prisma.welcome.findFirst({
-      where: { guildId: member.guild.id },
-    });
+    const data = await welcomes.getByGuildId(member.guild.id);
 
     if (!data) {
       return;

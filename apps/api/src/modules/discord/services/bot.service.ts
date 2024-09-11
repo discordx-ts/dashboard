@@ -9,14 +9,14 @@ import {
   Routes,
 } from "discord-api-types/v10";
 
-import { ConfigKeys, ConfigService } from "../../config/config.service";
-import { GuildModel } from "../models/guild.model";
+import { ConfigKeys, ConfigService } from "../../config/config.service.js";
+import { Guild } from "../structures/guild.model.js";
 
 @Injectable()
 export class BotService {
   private rest: REST;
 
-  constructor(private configService: ConfigService) {
+  constructor(configService: ConfigService) {
     this.rest = new REST({ version: "10", authPrefix: "Bot" }).setToken(
       configService.get(ConfigKeys.DISCORD_BOT_TOKEN),
     );
@@ -24,13 +24,13 @@ export class BotService {
 
   async getGuilds() {
     const guilds = (await this.rest.get(Routes.guilds())) as APIGuild[];
-    return guilds.map((guild) => new GuildModel(guild, this));
+    return guilds.map((guild) => new Guild(guild, this));
   }
 
   async getGuild(guildId: string) {
     try {
       const data = (await this.rest.get(Routes.guild(guildId))) as APIGuild;
-      return new GuildModel(data, this);
+      return new Guild(data, this);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       throw new BadRequestException(

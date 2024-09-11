@@ -9,9 +9,9 @@ import {
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 
-import { AuthRequest } from "../../../shared/interfaces/express";
-import { MembersQueryDto } from "../dto/members-query.dto";
-import { BotService } from "../services/bot.service";
+import { AuthRequest } from "../../../shared/interfaces/express.js";
+import { MembersQueryDto } from "../dto/members-query.dto.js";
+import { BotService } from "../services/bot.service.js";
 
 @Controller("guilds")
 export class DiscordGuildsController {

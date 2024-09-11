@@ -1,4 +1,8 @@
 {
   "files.eol": "\n",
-  "cSpell.words": ["discordx", "Lucide"]
+  "cSpell.words": [
+    "discordx",
+    "Lucide"
+  ],
+  "typescript.preferences.importModuleSpecifierEnding": "js"
 }

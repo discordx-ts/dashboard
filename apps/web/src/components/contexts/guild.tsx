@@ -8,6 +8,7 @@ import { api } from "@/lib/api";
 import errorToString from "@/lib/error";
 
 import ErrorScreen from "../molecules/error";
+import Header from "../molecules/header";
 import Loader from "../molecules/loader";
 
 interface Context {
@@ -27,7 +28,12 @@ function GuildProvider({ children, guildId }: ProviderProps) {
   );
 
   if (error) {
-    return <ErrorScreen message={errorToString(error)} />;
+    return (
+      <>
+        <Header />
+        <ErrorScreen message={errorToString(error)} />
+      </>
+    );
   }
 
   if (!guild) {

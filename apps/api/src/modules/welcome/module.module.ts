@@ -1,11 +1,10 @@
 import { Module } from "@nestjs/common";
 
-import { DiscordModule } from "../discord/discord.module";
-import { PrismaModule } from "../prisma/prisma.module";
-import { WelcomeController } from "./controllers/welcome.controller";
+import { DiscordModule } from "../discord/discord.module.js";
+import { WelcomeController } from "./controllers/welcome.controller.js";
 
 @Module({
-  imports: [DiscordModule, PrismaModule],
+  imports: [DiscordModule],
   providers: [],
   controllers: [WelcomeController],
   exports: [],

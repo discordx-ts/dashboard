@@ -1,8 +1,8 @@
 import { Controller, Get, Param, Req, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 
-import { AuthRequest } from "../../../shared/interfaces/express";
-import { BotService } from "../services/bot.service";
+import { AuthRequest } from "../../../shared/interfaces/express.js";
+import { BotService } from "../services/bot.service.js";
 
 @Controller("@me")
 export class DiscordMeController {

@@ -10,19 +10,16 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
+import { welcomes } from "@workspace/repo";
 
-import { AuthRequest } from "../../../shared/interfaces/express";
-import { BotService } from "../../discord/services/bot.service";
-import { PrismaService } from "../../prisma/services/prisma.service";
-import { WelcomeDto } from "../dto/welcome.dto";
+import { AuthRequest } from "../../../shared/interfaces/express.js";
+import { BotService } from "../../discord/services/bot.service.js";
+import { WelcomeDto } from "../dto/welcome.dto.js";
 
 @Controller("welcome/:server")
 @UseGuards(AuthGuard("jwt"))
 export class WelcomeController {
-  constructor(
-    private prisma: PrismaService,
-    private bot: BotService,
-  ) {}
+  constructor(private bot: BotService) {}
 
   @Get()
   async get(@Param("server") server: string, @Req() { user }: AuthRequest) {
@@ -41,31 +38,32 @@ export class WelcomeController {
     /**
      * Get payload for guild
      */
-    let data = await this.prisma.welcome.findFirst({
-      where: { guildId: guild.id },
-    });
-
-    /**
-     * Make sure system channel exists
-     */
-
-    if (!guild.system_channel_id) {
-      throw new BadRequestException(
-        "The system channel is not configured. Please navigate to the Discord server settings and set it up",
-      );
-    }
+    let data = await welcomes.getByGuildId(guild.id);
 
     /**
      * Create payload if not exist in database
      */
     if (!data) {
-      data = await this.prisma.welcome.create({
-        data: {
-          channelId: guild.system_channel_id,
-          guildId: guild.id,
-          goodbyeMessage: "{user} has left the server",
-          welcomeMessage: "{user} has joined the server",
-        },
+      /**
+       * Make sure system channel exists
+       */
+
+      if (!guild.system_channel_id) {
+        throw new BadRequestException(
+          "The system channel is not configured. Please navigate to the Discord server settings and set it up",
+        );
+      }
+
+      /**
+       * Create database record
+       */
+      data = await welcomes.create({
+        channelId: guild.system_channel_id,
+        guildId: guild.id,
+        goodbyeMessage: "{user} has left the server",
+        welcomeMessage: "{user} has joined the server",
+        isWelcomeEnabled: true,
+        isGoodbyeEnabled: true,
       });
     }
 
@@ -96,9 +94,6 @@ export class WelcomeController {
     /**
      * Update the payload
      */
-    await this.prisma.welcome.update({
-      where: { guildId: guild.id },
-      data: payload,
-    });
+    await welcomes.update(guild.id, payload);
   }
 }
