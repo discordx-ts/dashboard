@@ -1,9 +1,11 @@
 import eslint from "@eslint/js";
+import eslintConfigPrettier from "eslint-config-prettier";
+import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
 import tseslint from "typescript-eslint";
 
 export default [
   {
-    ignores: ["dist"],
+    ignores: ["build"],
   },
   ...[
     eslint.configs.recommended,
@@ -42,4 +44,6 @@ export default [
     files: ["**/*.js"],
     ...tseslint.configs.disableTypeChecked,
   },
+  eslintConfigPrettier,
+  eslintPluginPrettier,
 ];

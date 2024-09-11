@@ -4,8 +4,8 @@ import { AxiosError } from "axios";
 import { APIUser } from "discord-api-types/v10";
 import { useRouter } from "next/navigation";
 import {
-  ReactNode,
   createContext,
+  ReactNode,
   useContext,
   useEffect,
   useState,
