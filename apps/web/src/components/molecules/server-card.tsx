@@ -12,8 +12,8 @@ export default function ServerCard({ name, id, icon }: APIGuild) {
     : null;
 
   return (
-    <div className="bg-muted space-y-4 overflow-hidden rounded-md">
-      <div className="relative flex h-40 items-center justify-center overflow-hidden border-b">
+    <div className="bg-muted space-y-4 overflow-hidden rounded-md shadow-md">
+      <div className="relative flex h-40 items-center justify-center overflow-hidden border border-b bg-black/50">
         {avatar ? (
           <Image
             alt="background"
