@@ -1,15 +1,23 @@
 "use client";
 
 import { APIGuild } from "discord-api-types/v10";
+import Link from "next/link";
 import * as React from "react";
 import useSWR from "swr";
 
 import { api } from "@/lib/api";
 import errorToString from "@/lib/error";
 
-import ErrorScreen from "../molecules/error";
 import Header from "../molecules/header";
 import Loader from "../molecules/loader";
+import { Button } from "../ui/button";
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 
 interface Context {
   guild: APIGuild;
@@ -31,7 +39,22 @@ function GuildProvider({ children, guildId }: ProviderProps) {
     return (
       <>
         <Header />
-        <ErrorScreen message={errorToString(error)} />
+        <div className="flex h-screen w-full items-center justify-center">
+          <Card>
+            <CardHeader>
+              <CardTitle>Something went wrong!</CardTitle>
+              <CardDescription>{errorToString(error)}</CardDescription>
+            </CardHeader>
+            <CardFooter>
+              <div className="flex gap-2">
+                <Button variant="outline">Add to Discord</Button>
+                <Link href="/manage">
+                  <Button variant="outline">My Servers</Button>
+                </Link>
+              </div>
+            </CardFooter>
+          </Card>
+        </div>
       </>
     );
   }

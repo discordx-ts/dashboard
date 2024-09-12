@@ -28,13 +28,13 @@ export default function Page() {
   ).length;
 
   return (
-    <div>
-      <Card className="max-w-screen-md">
+    <div className="grid gap-4 lg:grid-cols-2 2xl:grid-cols-3">
+      <Card>
         <CardHeader>
           <CardTitle className="uppercase">Server Info</CardTitle>
           <CardDescription>{guild.name}</CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-2 md:grid-cols-2">
+        <CardContent className="grid gap-4 md:grid-cols-2">
           <div>
             <span className="text-muted-foreground">Id:</span> {guild.id}
           </div>

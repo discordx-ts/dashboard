@@ -35,7 +35,7 @@ export default function ServerSelect({ selected }: Props) {
   return (
     <>
       <Select value={selected} onValueChange={onValueChange}>
-        <SelectTrigger>
+        <SelectTrigger className="border-none">
           <SelectValue placeholder="Select server" />
         </SelectTrigger>
         <SelectContent>
@@ -50,7 +50,9 @@ export default function ServerSelect({ selected }: Props) {
                         src={`https://cdn.discordapp.com/icons/${id}/${icon}.jpg`}
                       />
                     )}
-                    <AvatarFallback>{getInitials(name)}</AvatarFallback>
+                    <AvatarFallback className="text-[8px]">
+                      {getInitials(name)}
+                    </AvatarFallback>
                   </Avatar>
                   <span>{name}</span>
                 </div>

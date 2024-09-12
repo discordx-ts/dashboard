@@ -1,8 +1,9 @@
 import { PanelLeft } from "lucide-react";
 import React from "react";
 
-import { useGuild } from "@/components/contexts/guild";
+import { useServer } from "@/components/contexts/server";
 import { HeaderUser } from "@/components/molecules/header";
+import ServerSelect from "@/components/molecules/server-select";
 import Sidebar from "@/components/molecules/sidebar";
 import { ThemeModeToggle } from "@/components/molecules/theme-mode";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,7 @@ import {
 } from "@/components/ui/sheet";
 
 export default function ManageHeader() {
-  const { guild } = useGuild();
+  const { guild } = useServer();
 
   const [open, setOpen] = React.useState(false);
 
@@ -36,7 +37,9 @@ export default function ManageHeader() {
           <Sidebar onClick={handleClick} />
         </SheetContent>
       </Sheet>
-      <h1>{guild.name}</h1>
+      <div>
+        <ServerSelect selected={guild.id} />
+      </div>
       <span className="flex-1" />
       <HeaderUser />
       <ThemeModeToggle />

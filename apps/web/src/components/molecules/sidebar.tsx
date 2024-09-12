@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 import { useGuild } from "../contexts/guild";
-import ServerSelect from "./server-select";
 
 interface Item {
   title: string;
@@ -53,9 +52,6 @@ export default function Sidebar({ onClick }: Props) {
 
   return (
     <nav className="flex flex-col gap-4 px-2 sm:py-4">
-      <div>
-        <ServerSelect selected={guild.id} />
-      </div>
       {items.map((item, index) =>
         typeof item === "string" ? (
           <h1

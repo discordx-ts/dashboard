@@ -9,6 +9,7 @@ import { z } from "zod";
 
 import { useServer } from "@/components/contexts/server";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -62,112 +63,119 @@ export default function WelcomeForm(data: WelcomeResponse) {
 
   return (
     <>
-      <div className="bg-background max-w-lg rounded-md p-4 shadow">
-        <h1 className="mb-6 text-2xl font-bold">Welcome & Goodbye</h1>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="channelId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Channel</FormLabel>
-                  <FormControl>
-                    <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a channel" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Channels</SelectLabel>
-                          {channels
-                            .filter(
-                              ({ type }) => type === ChannelType.GuildText,
-                            )
-                            .map((channel) => (
-                              <SelectItem key={channel.id} value={channel.id}>
-                                {channel.name}
-                              </SelectItem>
-                            ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormDescription>
-                    Where welcome message would be send
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="welcomeMessage"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Welcome Message</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This message will be triggered when a new member joins the
-                    server.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="goodbyeMessage"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Goodbye Message</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This message will be triggered when a member leaves the
-                    server.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="isWelcomeEnabled"
-              render={({ field }) => (
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                  <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                    Send welcome message
-                  </label>
-                </div>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="isGoodbyeEnabled"
-              render={({ field }) => (
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                  <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                    Send goodbye message
-                  </label>
-                </div>
-              )}
-            />
-            <Button type="submit">Submit</Button>
-          </form>
-        </Form>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Welcome & Goodbye</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="channelId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Channel</FormLabel>
+                    <FormControl>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a channel" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Channels</SelectLabel>
+                            {channels
+                              .filter(
+                                ({ type }) => type === ChannelType.GuildText,
+                              )
+                              .map((channel) => (
+                                <SelectItem key={channel.id} value={channel.id}>
+                                  {channel.name}
+                                </SelectItem>
+                              ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormDescription>
+                      Where welcome message would be send
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="welcomeMessage"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Welcome Message</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      This message will be triggered when a new member joins the
+                      server.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="goodbyeMessage"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Goodbye Message</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      This message will be triggered when a member leaves the
+                      server.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="isWelcomeEnabled"
+                render={({ field }) => (
+                  <div className="flex items-center space-x-2">
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                      Send welcome message
+                    </label>
+                  </div>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="isGoodbyeEnabled"
+                render={({ field }) => (
+                  <div className="flex items-center space-x-2">
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                      Send goodbye message
+                    </label>
+                  </div>
+                )}
+              />
+              <Button type="submit">Submit</Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
     </>
   );
 }
