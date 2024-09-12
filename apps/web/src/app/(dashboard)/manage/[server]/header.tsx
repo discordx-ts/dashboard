@@ -34,10 +34,13 @@ export default function ManageHeader() {
         </SheetTrigger>
         <SheetContent side="left" className="sm:max-w-xs">
           <SheetClose />
+          <div className="px-2 pb-4">
+            <ServerSelect selected={guild.id} />
+          </div>
           <Sidebar onClick={handleClick} />
         </SheetContent>
       </Sheet>
-      <div>
+      <div className="hidden md:block">
         <ServerSelect selected={guild.id} />
       </div>
       <span className="flex-1" />

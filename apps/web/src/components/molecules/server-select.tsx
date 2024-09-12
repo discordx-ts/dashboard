@@ -35,7 +35,7 @@ export default function ServerSelect({ selected }: Props) {
   return (
     <>
       <Select value={selected} onValueChange={onValueChange}>
-        <SelectTrigger className="border-none">
+        <SelectTrigger>
           <SelectValue placeholder="Select server" />
         </SelectTrigger>
         <SelectContent>
