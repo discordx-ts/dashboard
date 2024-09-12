@@ -8,6 +8,7 @@ import {
   GuildChannelType,
   Routes,
 } from "discord-api-types/v10";
+import { URLSearchParams } from "url";
 
 import { ConfigKeys, ConfigService } from "../../config/config.service.js";
 import { Guild } from "../structures/guild.model.js";
@@ -23,13 +24,24 @@ export class BotService {
   }
 
   async getGuilds() {
-    const guilds = (await this.rest.get(Routes.guilds())) as APIGuild[];
+    const guilds = await this.rest
+      .get(Routes.guilds())
+      .then((r) => r as APIGuild[]);
+
     return guilds.map((guild) => new Guild(guild, this));
   }
 
   async getGuild(guildId: string) {
     try {
-      const data = (await this.rest.get(Routes.guild(guildId))) as APIGuild;
+      const query = new URLSearchParams();
+      query.set("with_counts", "true");
+
+      const data = await this.rest
+        .get(Routes.guild(guildId), {
+          query,
+        })
+        .then((r) => r as APIGuild);
+
       return new Guild(data, this);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
