@@ -1,5 +1,5 @@
 import { Welcome as IWelcome } from "@workspace/database";
-import { container, singleton } from "tsyringe";
+import { singleton } from "tsyringe";
 
 import { PrismaService } from "../services/index.js";
 import { Welcome } from "../structures/welcome.js";
@@ -61,5 +61,3 @@ export class WelcomeManager {
     });
   }
 }
-
-export const welcomes = container.resolve(WelcomeManager);

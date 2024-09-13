@@ -1,5 +1,5 @@
 import { User as IUser } from "@workspace/database";
-import { container, singleton } from "tsyringe";
+import { singleton } from "tsyringe";
 
 import { PrismaService } from "../services/index.js";
 import { User } from "../structures/index.js";
@@ -61,5 +61,3 @@ export class UserManager {
     });
   }
 }
-
-export const users = container.resolve(UserManager);

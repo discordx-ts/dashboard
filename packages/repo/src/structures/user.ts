@@ -3,7 +3,7 @@ import { User as IUser } from "@workspace/database";
 import { APIGuild, APIUser, Routes } from "discord-api-types/v10";
 import { injectable } from "tsyringe";
 
-import { users } from "../managers/user.js";
+import { users } from "../managers/index.js";
 
 @injectable()
 export class User implements IUser {
