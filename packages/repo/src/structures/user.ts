@@ -44,7 +44,7 @@ export class User implements IUser {
   /**
    * Update user
    */
-  async update(data: Partial<Omit<User, "id" | "discordId" | "createdAt">>) {
+  async update(data: Partial<Omit<IUser, "id" | "discordId" | "createdAt">>) {
     Object.assign(this, data);
     await users.update(this.id, data);
   }
